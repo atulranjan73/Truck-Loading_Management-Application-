@@ -17,7 +17,7 @@ function AddUser() {
 
   const [warehouseData, setWarehouseData] = useState({
     warehouseName: "",
-    location: ""
+    location: "",
     manager: "",
     phone: "",
   });
