@@ -6,7 +6,7 @@ function Sidebar({ unreadCount = 2 }) {
 
   // Extract user role from localStorage
   const user = localStorage.getItem("user");
-  console.log(user)
+  console.log(user);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -27,8 +27,8 @@ function Sidebar({ unreadCount = 2 }) {
             </Link>
           </li>
 
-          {/* Warehouse User - Show all menu items */}
-          {user === "warehouse" && (
+          {/* Admin Role - Full access to warehouse features */}
+          {user === "admin" && (
             <>
               <li>
                 <Link to="/adduser">
@@ -55,6 +55,14 @@ function Sidebar({ unreadCount = 2 }) {
               </li>
 
               <li>
+                <Link to="/truck">
+                  <button className="w-full flex items-center gap-4 px-4 py-3 text-black bg-gray-200 rounded-lg hover:bg-gray-300 transition-all">
+                    <p className="text-base font-medium capitalize">Track Truck</p>
+                  </button>
+                </Link>
+              </li>
+
+              <li>
                 <Link to="/notification">
                   <button className="w-full flex items-center justify-between px-4 py-3 text-black bg-gray-200 rounded-lg hover:bg-gray-300 transition-all">
                     <p className="text-base font-medium capitalize">Notifications</p>
@@ -69,7 +77,8 @@ function Sidebar({ unreadCount = 2 }) {
             </>
           )}
 
-          {user === "driver" && (
+          {/* Warehouse Role - Similar to Driver */}
+          {user === "warehouse" && (
             <>
               <li>
                 <Link to="/consignment">
@@ -102,7 +111,41 @@ function Sidebar({ unreadCount = 2 }) {
             </>
           )}
 
-          
+          {/* Driver Role - Remains the same */}
+          {user === "driver" && (
+            <>
+              <li>
+                <Link to="/driverconsignement">
+                  <button className="w-full flex items-center gap-4 px-4 py-3 text-black bg-gray-200 rounded-lg hover:bg-gray-300 transition-all">
+                    <p className="text-base font-medium capitalize">Consignment</p>
+                  </button>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/notification">
+                  <button className="w-full flex items-center justify-between px-4 py-3 text-black bg-gray-200 rounded-lg hover:bg-gray-300 transition-all">
+                    <p className="text-base font-medium capitalize">Notifications</p>
+                    {unreadCount > 0 && (
+                      <span className="inline-flex items-center justify-center w-6 h-6 text-xs font-semibold text-white bg-red-500 rounded-full animate-bounce">
+                        {unreadCount}
+                      </span>
+                    )}
+                  </button>
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/driverprofile">
+                  <button className="w-full flex items-center gap-4 px-4 py-3 text-black bg-gray-200 rounded-lg hover:bg-gray-300 transition-all">
+                    <p className="text-base font-medium capitalize">Profile</p>
+                  </button>
+                </Link>
+              </li>
+            </>
+          )}
+
+          {/* Logout - Visible to all */}
           <li>
             <button
               className="w-full flex items-center gap-4 px-4 py-3 text-black bg-gray-200 rounded-lg hover:bg-gray-300 transition-all"

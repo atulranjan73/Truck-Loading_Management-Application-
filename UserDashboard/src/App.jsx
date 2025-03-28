@@ -14,6 +14,10 @@ import MainLayout from "./Components/MainLayout";
 import Adduser from "./page/Adduser";
 import Driver from "./page/Driver";
 import Warehouse from "./page/Warehouse";
+import Truck from "./page/Truck";
+import Notification from "./page/Notification";
+import Driverconsignement from "./page/Driverconsignement";
+import DriverProfile from "./page/DriverProfile";
 
 
 function App() {
@@ -29,6 +33,11 @@ function App() {
             <Route path="/adduser" element={<Adduser />} />
             <Route path="/driver" element={<Driver />} />
             <Route path="/warehouse" element={<Warehouse />} />
+            <Route path="/truck" element={<Truck/>} />
+            <Route path="/notification" element={<Notification/>} />
+            <Route path="/driverconsignement" element={<Driverconsignement/>} />
+            <Route path="driverprofile" element={<DriverProfile/>} />
+            
           </Route>
         </Route>
         <Route path="/login" element={<Login />} />

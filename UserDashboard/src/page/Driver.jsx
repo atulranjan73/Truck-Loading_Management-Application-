@@ -1,23 +1,32 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllDriver } from "../Redux/Feature/driverSlice";
+import DriverUpdateModal from "../page/driverUpdateModel"; 
 
 function Driver() {
   const dispatch = useDispatch();
   const { drivers, loading, error } = useSelector((state) => state.driver);
-
+  const [isUpdate, setUpdate] = useState(false);
+  const [selected, setSelected] = useState(null);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
     dispatch(getAllDriver());
   }, [dispatch]);
 
-  // Filter drivers based on search input
-  const filteredDrivers = drivers.filter((driver) =>
-    ["name", "phone", "license"].some((key) =>  
-      driver[key].toLowerCase().includes(search.toLowerCase())
-    )
-  );
+  // Ensure drivers array exists before filtering
+  const filteredDrivers = drivers
+    ? drivers.filter((driver) =>
+        ["name", "phone", "license"].some(
+          (key) => driver[key]?.toLowerCase().includes(search.toLowerCase())
+        )
+      )
+    : [];
+
+  const handleUpdate = (driver) => {
+    setUpdate(true);
+    setSelected(driver);
+  };
 
   return (
     <div className="mt-15 min-h-screen bg-blue-300 py-12 px-4 sm:px-6 lg:px-8 xl:ml-72">
@@ -37,16 +46,39 @@ function Driver() {
       {error && <p className="text-red-500">{error}</p>}
 
       {/* Display Drivers */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {filteredDrivers.map((driver) => (
-          <div key={driver._id} className="p-4 bg-white shadow-lg rounded-lg">
-            <h2 className="text-lg font-semibold">{driver.name}</h2>
-            <p className="text-gray-700">📞 {driver.phone}</p>
-            <p className="text-gray-700">🚗 License: {driver.license}</p>
-            <p className="text-green-600 font-semibold">{driver.status}</p>
-          </div>
-        ))}
-      </div>
+      {filteredDrivers.length > 0 ? (
+        <div className="space-y-4">
+          {filteredDrivers.map((driver) => (
+            <div key={driver._id} className="flex items-center p-4 bg-white shadow-lg rounded-lg border-l-4 
+            ${driver.status === 'available' ? 'border-green-500' : driver.status === 'on_trip' ? 'border-yellow-500' : 'border-red-500'}">
+              <div className="flex-1">
+                <h2 className="text-lg font-semibold text-gray-800">{driver.name}</h2>
+                <p className="text-gray-600">📞 {driver.phone}</p>
+                <p className="text-gray-600">🚗 License: {driver.license}</p>
+              </div>
+              <p className={`font-semibold mx-4 
+                ${driver.status === "available" ? "text-green-600" : 
+                driver.status === "on_trip" ? "text-yellow-600" : "text-red-600"}`}>
+                {driver.status}
+              </p>
+              {/* Edit Button */}
+              <button
+                onClick={() => handleUpdate(driver)}
+                className="px-4 py-1 border bg-gray-200 hover:bg-gray-300 rounded"
+              >
+                Edit
+              </button>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-700 text-center mt-4">No matching drivers found.</p>
+      )}
+
+      {/* Driver Update Modal */}
+      {isUpdate && selected && (
+        <DriverUpdateModal driver={selected} onClose={() => setUpdate(false)} />
+      )}
     </div>
   );
 }

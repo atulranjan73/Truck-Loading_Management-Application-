@@ -5,6 +5,8 @@ const ConnectionDB = require("./config/db");
 const userRoutes = require("./router/userRoutes");
 const driverRoutes = require("./router/driverRouter");
 const warehouseRoute = require("./router/warehouseRouter");
+const TruckRouter = require('./router/TruckRouter')
+
 
 const app = express();
 
@@ -33,4 +35,5 @@ ConnectionDB()
 app.use("/api/users", userRoutes); 
 app.use("/api/driver", driverRoutes); 
 app.use("/api/warehouse", warehouseRoute); 
+app.use("/api/truck", TruckRouter); 
 

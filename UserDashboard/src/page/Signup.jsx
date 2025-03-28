@@ -22,7 +22,7 @@ function Signup() {
       return;
     }
 
-    dispatch(signupUser({ name, email, password, role }))
+    dispatch(signupUser({ name, email:email.toLowerCase(), password, role }))
       .unwrap()
       .then(() => {
         toast.success("Signup successful! Redirecting...");

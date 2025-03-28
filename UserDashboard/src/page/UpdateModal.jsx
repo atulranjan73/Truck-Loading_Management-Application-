@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import {
   getAllWarehouse,
   updateWarehouse,
-} from "../Redux/Feature/warehouseSlice"; // ✅ Import correct thunk
+} from "../Redux/Feature/warehouseSlice"; 
 
 const UpdateModal = ({ selected, onClose }) => {
   const dispatch = useDispatch();

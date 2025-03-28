@@ -54,4 +54,36 @@ exports.getAllDriver = async(req , res)=>{
  }
 }
 
+exports.update = async (req, res )=>{
+const id = req.params ;
+console.log(req.body)
+const updatedata = req.body;
+
+try {
+  const isdriver = await Driver.findById(id)
+  if(!isdriver){
+    return res.status(404).json({
+      success :true ,
+      message:"Driver is not found "
+
+    })
+  }
+
+  const updateDriver = await Driver.findByIdAndUpdate(id ,updatedata,{
+    new :true
+  } );
+  return res.status(200).json({
+    success:true,
+    message:"update Successfully...",
+    data: updateDriver
+  })
+} catch (error) {
+  return res.status(500).json({
+    success:true,
+    message:"failed update Driver data ",
+    error:error.message 
+  })
+}
+}
+
 

@@ -94,7 +94,8 @@ const warehouseSlice = createSlice({
             .addCase(getAllWarehouse.rejected, (state, action) => {
                 state.loading = false;
                 state.error = action.payload || "Something went wrong while fetching warehouses";
-            }).addCase(updateWarehouse.pending, (state) => {
+            })
+          .addCase(updateWarehouse.pending, (state) => {
               state.loading = true;
               state.error = null;
           })

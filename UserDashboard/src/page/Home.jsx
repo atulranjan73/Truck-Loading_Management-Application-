@@ -1,4 +1,8 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllDriver } from "../Redux/Feature/driverSlice";
+import {getAllWarehouse} from "../Redux/Feature/warehouseSlice"
+
 import {
   BarChart,
   Bar,
@@ -14,12 +18,32 @@ import {
 } from "recharts";
 
 function Home() {
+  const dispatch = useDispatch();
+  
+  // Fetching driver data from Redux
+  const { drivers, loading: driverLoading, error: driverError } = useSelector((state) => state.driver);
+const { warehouse, loading: warehouseLoading, error: warehouseError } = useSelector((state) => state.warehouse);
+
+  
+  // Fetch driver data on component mount
+  useEffect(() => {
+    dispatch(getAllDriver());
+  }, [dispatch]);
+
+
+  useEffect(() => {
+  dispatch(getAllWarehouse());
+  }, [dispatch]);
+
   const username = "Admin";
-  const totalTrucks = 500;
+  
   const loadedTrucks = 320;
   const inTransitTrucks = 150;
   const deliveredTrucks = 30;
-  const totalDrivers = 200;
+  
+
+  const totalDrivers = drivers?.length || 0; 
+  const totalWarehouse = warehouse?.length || 0;
 
   // Dummy data for BarChart (Truck Loads per Month)
   const barData = [
@@ -47,11 +71,17 @@ function Home() {
           Welcome, <span className="text-white bg-blue-500 px-3 py-1 rounded-full shadow-md">{username}</span>!
         </h1>
 
-        {/* Truck Statistics */}
+        {/* Truck & Driver Statistics */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="bg-purple-500 rounded-xl p-6 shadow-lg">
+            <p className="text-sm text-gray-200 uppercase font-medium">Total Drivers</p>
+        
+              <h4 className="text-2xl font-bold text-white">{totalDrivers}</h4>
+        
+          </div>
           <div className="bg-blue-500 rounded-xl p-6 shadow-lg">
-            <p className="text-sm text-gray-200 uppercase font-medium">Total Trucks</p>
-            <h4 className="text-2xl font-bold text-white">{totalTrucks}</h4>
+            <p className="text-sm text-gray-200 uppercase font-medium">Total Warehouse</p>
+            <h4 className="text-2xl font-bold text-white">{totalWarehouse}</h4>
           </div>
           <div className="bg-green-500 rounded-xl p-6 shadow-lg">
             <p className="text-sm text-gray-200 uppercase font-medium">Loaded</p>
@@ -65,6 +95,7 @@ function Home() {
             <p className="text-sm text-gray-200 uppercase font-medium">Delivered</p>
             <h4 className="text-2xl font-bold text-white">{deliveredTrucks}</h4>
           </div>
+         
         </div>
 
         {/* Graphs */}

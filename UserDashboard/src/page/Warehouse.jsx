@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllWarehouse } from "../Redux/Feature/warehouseSlice";
-import UpdateModal from "../Components/UpdateModal";
+import UpdateModal from "../page/UpdateModal";
 
 function Warehouse() {
   const dispatch = useDispatch();
