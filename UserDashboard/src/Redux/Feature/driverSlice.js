@@ -49,6 +49,7 @@ export const updateDriver = createAsyncThunk(
   }
 );
 
+
 // ✅ Redux Slice
 const driverSlice = createSlice({
   name: "driver",
@@ -56,7 +57,7 @@ const driverSlice = createSlice({
     drivers: [],
     loading: false,
     error: null,
-  },
+  },                                                                                                                                
   reducers: {},
   extraReducers: (builder) => {
     builder
