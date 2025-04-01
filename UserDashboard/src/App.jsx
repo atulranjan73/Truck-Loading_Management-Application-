@@ -37,6 +37,7 @@ function App() {
             <Route path="/notification" element={<Notification/>} />
             <Route path="/driverconsignement" element={<Driverconsignement/>} />
             <Route path="driverprofile" element={<DriverProfile/>} />
+
             
           </Route>
         </Route>

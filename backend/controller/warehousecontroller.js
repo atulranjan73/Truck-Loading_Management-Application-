@@ -47,7 +47,6 @@ exports.getAllWarehouse = async (req, res) => {
 
 exports.update = async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
   const updatedata = req.body;
 
   try {

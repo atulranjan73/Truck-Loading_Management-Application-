@@ -22,7 +22,8 @@ export const getAllDriver = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(`${API_URL}/getAllDriver`);
-      return response.data.drivers || []; // Ensuring we always return an array
+      return response.data.drivers || [];
+
     } catch (error) {
       return rejectWithValue(error.response?.data || "Failed to fetch drivers");
     }

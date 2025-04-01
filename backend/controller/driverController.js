@@ -55,7 +55,8 @@ exports.getAllDriver = async(req , res)=>{
 }
 
 exports.update = async (req, res )=>{
-const id = req.params ;
+const {id} = req.params ;
+console.log(id)
 console.log(req.body)
 const updatedata = req.body;
 

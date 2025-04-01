@@ -6,10 +6,17 @@ function DriverUpdateModal({ driver, onClose }) {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    license: "",
-    status: "available",
+    driver: "",
+    truck: "",
+    origin: "",
+    destination:"",
+    goodsType:"",
+    weight:"",
+    startDate:"",
+    endDate:""
+
+
+
   });
 
   // ✅ Automatically update form when `driver` changes

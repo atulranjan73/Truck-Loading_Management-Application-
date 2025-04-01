@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllDriver } from "../Redux/Feature/driverSlice";
-import DriverUpdateModal from "../page/driverUpdateModel"; 
+import DriverUpdateModal from "./driverUpdateModel";
+import AssignTripModal from "./AssignTripModal"; // Import the modal
 
 function Driver() {
   const dispatch = useDispatch();
@@ -9,12 +10,13 @@ function Driver() {
   const [isUpdate, setUpdate] = useState(false);
   const [selected, setSelected] = useState(null);
   const [search, setSearch] = useState("");
+  const [isAssign, setAssign] = useState(false); // State for assign modal
+  const [selectedDriver, setSelectedDriver] = useState(false); // Store selected driver
 
   useEffect(() => {
     dispatch(getAllDriver());
   }, [dispatch]);
 
-  // Ensure drivers array exists before filtering
   const filteredDrivers = drivers
     ? drivers.filter((driver) =>
         ["name", "phone", "license"].some(
@@ -26,6 +28,11 @@ function Driver() {
   const handleUpdate = (driver) => {
     setUpdate(true);
     setSelected(driver);
+  };
+
+  const handleAssignTrip = (driver) => {
+    setSelectedDriver(driver);
+    setAssign(true);
   };
 
   return (
@@ -66,7 +73,13 @@ function Driver() {
                 onClick={() => handleUpdate(driver)}
                 className="px-4 py-1 border bg-gray-200 hover:bg-gray-300 rounded"
               >
-                Edit
+              Edit 
+              </button>
+              <button 
+                onClick={() => handleAssignTrip(driver)}
+                className="ml-4 px-4 py-1 border bg-gray-200 hover:bg-gray-300 rounded"
+              >
+              Assign Trip
               </button>
             </div>
           ))}
@@ -78,6 +91,11 @@ function Driver() {
       {/* Driver Update Modal */}
       {isUpdate && selected && (
         <DriverUpdateModal driver={selected} onClose={() => setUpdate(false)} />
+      )}
+
+      {/* Assign Trip Modal */}
+      {isAssign && selectedDriver && (
+        <AssignTripModal driver={selectedDriver} onClose={() => setAssign(false)} />
       )}
     </div>
   );
